@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# REX SHOP
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+An ecommerce App using React, Redux, Firebase, GraphQL and Stripe API.
 
 ## Available Scripts
 
