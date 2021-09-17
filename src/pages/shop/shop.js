@@ -3,6 +3,7 @@ import CollectionPreview from '../../components/collection-preview/collection-pr
 
 import SHOP_DATA from './shop-data';
 
+import './shop.scss';
 
 class Shop extends Component {
     constructor(props) {
