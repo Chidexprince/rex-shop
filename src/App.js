@@ -7,7 +7,7 @@ import Header from './components/header/header';
 import Home from './pages/home/home';
 import Account from './pages/account/account';
 import Shop from './pages/shop/shop';
-import { auth } from './firebase/firebase.util';
+import { auth, createUserProfileDocument } from './firebase/firebase.util';
 
 class App extends Component {
   constructor() {
@@ -21,12 +21,26 @@ class App extends Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-      this.setState({
-        currentUser: user
-      })
 
-    })
+    // Handles Google Signin and setting user details
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      const userRef = await createUserProfileDocument(userAuth);
+
+      if(userAuth) {
+        userRef.onSnapshot(snapShot => {
+          this.setState(
+            {
+              currentUser: {
+                id: snapShot.id,
+                ...snapShot.data()
+              }
+            }
+          )
+        })
+      }
+
+      this.setState({ currentUser: userAuth})
+    });
 
   }
 
