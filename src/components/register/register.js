@@ -5,6 +5,8 @@ import CustomButton from '../custom-button/custom-button';
 
 import { auth, createUserProfileDocument } from '../../firebase/firebase.util';
 
+import './register.scss'
+
 class Register extends Component {
     constructor() {
         super();
@@ -17,7 +19,7 @@ class Register extends Component {
     }
 
     handleSubmit = async event => {
-        event.preventEvent();
+        event.preventDefault();
 
         const { displayName, email, password, confirmPassword } = this.state;
 
@@ -70,7 +72,7 @@ class Register extends Component {
                     />
                     <FormInput
                         type="email"
-                        name="Email"
+                        name="email"
                         value={email}
                         onChange={this.handleChange}
                         label='Email'
