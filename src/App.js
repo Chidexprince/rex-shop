@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import './App.css';
 import Header from './components/header/header';
@@ -8,6 +9,7 @@ import Home from './pages/home/home';
 import Account from './pages/account/account';
 import Shop from './pages/shop/shop';
 import { auth, createUserProfileDocument } from './firebase/firebase.util';
+import { setCurrentUser } from './redux/user/user.actions';
 
 class App extends Component {
   constructor() {
@@ -22,24 +24,22 @@ class App extends Component {
 
   componentDidMount() {
 
+    const { setCurrentUser } = this.props;
+
     // Handles Google Signin and setting user details
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       const userRef = await createUserProfileDocument(userAuth);
 
       if(userAuth) {
         userRef.onSnapshot(snapShot => {
-          this.setState(
-            {
-              currentUser: {
-                id: snapShot.id,
-                ...snapShot.data()
-              }
-            }
-          )
-        })
+          setCurrentUser({
+            id: snapShot.id,
+            ...snapShot.data()
+          });
+        });
       }
 
-      this.setState({ currentUser: userAuth})
+      setCurrentUser(userAuth)
     });
 
   }
@@ -52,7 +52,7 @@ class App extends Component {
     return (
       <div>    
         <BrowserRouter>
-        <Header currentUser={this.state.currentUser} />
+        <Header />
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Account}/>
@@ -66,4 +66,8 @@ class App extends Component {
 
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => ({
+  setCurrentUser: user => dispatch(setCurrentUser(user))
+})
+
+export default connect(null, mapDispatchToProps)(App);

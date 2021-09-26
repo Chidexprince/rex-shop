@@ -34,7 +34,7 @@ class Register extends Component {
                 password
             );
 
-            await createUserProfileDocument(user, { displayName});
+            await createUserProfileDocument(user, { displayName });
 
             this.setState({
                 displayName: '',

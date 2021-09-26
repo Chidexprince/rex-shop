@@ -15,16 +15,16 @@ const config =  {
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   if(!userAuth) return;
 
-  const userRef = firestore.doc(`users/${userAuth.uid}`);
+  const userRef = firestore.doc(`users/${userAuth.uid}`); // Pass the uid in the path
 
-  const snapShot = await userRef.get();
+  const snapShot = await userRef.get(); // Pull the data based on the uid
 
-  if(!snapShot.exists) {
-    const { displayName, email } = userAuth;
-    const createdAt = new Date();
+  if(!snapShot.exists) { // If the data doesn't exist
+    const { displayName, email } = userAuth; // Destructure the displayName and email from userAuth
+    const createdAt = new Date(); // get date and time
 
     try {
-      await userRef.set({
+      await userRef.set({ // Create user with the parameters
         displayName,
         email,
         createdAt,
@@ -35,10 +35,10 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
     }
   }
 
-  return userRef
+  return userRef // Return details of user created
 }
 
-if (firebase.apps.length === 0) {
+if (firebase.apps.length === 0) { // To avoid re-initialization of firebase  
   firebase.initializeApp(config);
 }
 
