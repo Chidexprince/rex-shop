@@ -11,8 +11,12 @@
     text-transform: uppercase;
     font-family: 'Open Sans Condensed';
     font-weight: bolder;
+    border-radius: 5px;
     border: none;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+
 
     &:hover {
         background-color: #fff;
@@ -26,6 +30,18 @@
 
         &:hover {
             background-color: #357ae8;
+            border: none;
+        }
+    }
+
+    &.inverted {
+        background-color: #fff;
+        color: #29AAEA;
+        border: 1px solid #29AAEA;
+
+        &:hover {
+            background-color: #29AAEA;
+            color: #fff;
             border: none;
         }
     }
