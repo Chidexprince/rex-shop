@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Button from '@mui/material/Button';
 
 import { auth } from '../../firebase/firebase.util';
 
@@ -28,15 +29,17 @@ const Header = ({currentUser, hidden}) => (
                 (
                     <div className='option' onClick={() => auth.signOut()}> LOG OUT</div>
                 ) : (
-                    <Link to='/login'>LOGIN</Link> 
+                   <Button variant="contained"><Link to='/login'>LOGIN</Link></Button> 
                 )
             }
             <CartIcon />
         </div>
+        
 
         {hidden ? null : <CartDropdown />}
-        
+        <div className='header-border'></div>
     </div>
+    
 );
 
 const mapStateToProps = state => ({
